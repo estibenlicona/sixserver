@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch file",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${file}"
+        },
+        {
+            "name": "Launch Package",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/cmd/main.go",
+            "env": {
+               "CHECKING_PORT": "10881",
+               "LOGIN_PORT": "20202"
+           },
+            "args": [],
+            "showLog": true
+        },
+    ]
+}
