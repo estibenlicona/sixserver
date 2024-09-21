@@ -4,30 +4,26 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"os"
+	"sixserver/pkg/types"
 	"strconv"
 )
 
-type Config struct {
-	LoginPort   int
-	LobbyPort   int
-	NetworkPort int
-	MainPort    int
-	RedisURL    string
-	ServerIP    string
-}
-
-func Load() *Config {
+func Load() *types.Config {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Error loading .env file")
 	}
-	return &Config{
+	return &types.Config{
+		ServerIP:    getEnv("SERVER_IP", "localhost"),
 		LoginPort:   getEnvAsInt("LOGIN_PORT", 10881),
 		LobbyPort:   getEnvAsInt("LOBBY_PORT", 20202),
 		NetworkPort: getEnvAsInt("NETWORK_PORT", 20201),
 		MainPort:    getEnvAsInt("MAIN_PORT", 20200),
-		RedisURL:    getEnv("REDIS_URL", "localhost:6379"),
-		ServerIP:    getEnv("SERVER_IP", "localhost"),
+		Redis: types.RedisConfig{
+			Addr:     getEnv("REDIS_URL", "localhost:6379"),
+			Password: getEnv("REDIS_PASSWORD", ""),
+			DB:       getEnvAsInt("REDIS_DB", 0),
+		},
 	}
 }
 
