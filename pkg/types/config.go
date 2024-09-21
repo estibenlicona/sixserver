@@ -1,11 +1,12 @@
 package types
 
 type Config struct {
+	ServerIP    string
 	LoginPort   int
 	LobbyPort   int
 	NetworkPort int
 	MainPort    int
-	ServerIP    string
+	CipherKey   string
 	Redis       RedisConfig
 }
 

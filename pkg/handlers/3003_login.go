@@ -7,6 +7,7 @@ import (
 )
 
 func Handle0x3003(pkt types.Packet, conn gnet.Conn) (out []byte, action gnet.Action) {
+
 	err := pes6.SendPacketWithZeros(conn, 0x3004, 4)
 	HandleError(err)
 	return

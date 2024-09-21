@@ -19,6 +19,7 @@ func Load() *types.Config {
 		LobbyPort:   getEnvAsInt("LOBBY_PORT", 20202),
 		NetworkPort: getEnvAsInt("NETWORK_PORT", 20201),
 		MainPort:    getEnvAsInt("MAIN_PORT", 20200),
+		CipherKey:   getEnv("CIPHER_KEY", ""),
 		Redis: types.RedisConfig{
 			Addr:     getEnv("REDIS_URL", "localhost:6379"),
 			Password: getEnv("REDIS_PASSWORD", ""),
