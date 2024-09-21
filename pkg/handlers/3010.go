@@ -8,7 +8,7 @@ import (
 	"sixserver/pkg/types"
 )
 
-func Handle0x3010(pkt types.Packet, conn gnet.Conn) (out []byte, action gnet.Action) {
+func Handle0x3010(pkt types.Packet, conn gnet.Conn, config *types.Config) (out []byte, action gnet.Action) {
 
 	profiles := []types.Profile{
 		{ID: 12345, Name: "Player1", PlayTime: 3600, Points: 600, Rating: 2},

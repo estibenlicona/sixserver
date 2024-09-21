@@ -6,13 +6,14 @@ import (
 	"sixserver/pkg/types"
 )
 
-type EventHandlerFunc func(pkt types.Packet, conn gnet.Conn) (out []byte, action gnet.Action)
+type EventHandlerFunc func(pkt types.Packet, conn gnet.Conn, config *types.Config) (out []byte, action gnet.Action)
 
 type Dispatcher struct {
 	Handlers map[uint16]EventHandlerFunc
+	Config   *types.Config
 }
 
-func NewDispatcher() *Dispatcher {
+func NewDispatcher(config *types.Config) *Dispatcher {
 	return &Dispatcher{
 		Handlers: map[uint16]EventHandlerFunc{
 			0x0003: handlers.Handle0x0003,
@@ -43,6 +44,7 @@ func NewDispatcher() *Dispatcher {
 			0x4300: handlers.Handle0x4300,
 			0x4310: handlers.Handle0x4310,
 		},
+		Config: config,
 	}
 }
 

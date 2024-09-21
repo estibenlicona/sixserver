@@ -6,7 +6,7 @@ import (
 	"sixserver/pkg/types"
 )
 
-func Handle0x4310(pkt types.Packet, conn gnet.Conn) (out []byte, action gnet.Action) {
+func Handle0x4310(pkt types.Packet, conn gnet.Conn, config *types.Config) (out []byte, action gnet.Action) {
 	var roomName = types.RemovePadding(pkt.Data[0:64])
 	lobby := types.Lobby{}
 

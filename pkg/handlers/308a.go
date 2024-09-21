@@ -8,7 +8,7 @@ import (
 	"sixserver/pkg/types"
 )
 
-func Handle0x308a(pkt types.Packet, conn gnet.Conn) (out []byte, action gnet.Action) {
+func Handle0x308a(pkt types.Packet, conn gnet.Conn, config *types.Config) (out []byte, action gnet.Action) {
 	buffer := new(bytes.Buffer)
 
 	value := uint32(0xfffffedd)

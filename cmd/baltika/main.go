@@ -13,7 +13,7 @@ func main() {
 	cfg := config.Load()
 	database.InitRedis(*cfg)
 
-	loginServer := tcp.NewServer(cfg.LoginPort)
+	loginServer := tcp.NewServer(cfg.LoginPort, cfg)
 	go func() {
 		if err := gnet.Serve(loginServer, fmt.Sprintf("tcp://:%d", loginServer.Port), gnet.WithMulticore(true)); err != nil {
 			log.Fatalf("Error starting LoginServer: %v\n", err)
@@ -22,7 +22,7 @@ func main() {
 		}
 	}()
 
-	lobbyServer := tcp.NewServer(cfg.LobbyPort)
+	lobbyServer := tcp.NewServer(cfg.LobbyPort, cfg)
 	go func() {
 		if err := gnet.Serve(lobbyServer, fmt.Sprintf("tcp://:%d", lobbyServer.Port), gnet.WithMulticore(true)); err != nil {
 			log.Fatalf("Error starting LobbyServer: %v\n", err)
@@ -31,7 +31,7 @@ func main() {
 		}
 	}()
 
-	networkServer := tcp.NewServer(cfg.NetworkPort)
+	networkServer := tcp.NewServer(cfg.NetworkPort, cfg)
 	go func() {
 		if err := gnet.Serve(networkServer, fmt.Sprintf("tcp://:%d", networkServer.Port), gnet.WithMulticore(true)); err != nil {
 			log.Fatalf("Error starting NetworkServer: %v\n", err)
@@ -40,7 +40,7 @@ func main() {
 		}
 	}()
 
-	mainServer := tcp.NewServer(cfg.MainPort)
+	mainServer := tcp.NewServer(cfg.MainPort, cfg)
 	go func() {
 		if err := gnet.Serve(mainServer, fmt.Sprintf("tcp://:%d", mainServer.Port), gnet.WithMulticore(true)); err != nil {
 			log.Fatalf("Error starting CoreServer: %v\n", err)

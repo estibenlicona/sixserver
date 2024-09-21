@@ -15,8 +15,8 @@ type Server struct {
 	Factory *interface{}
 }
 
-func NewServer(port int) *Server {
-	dispatcher := NewDispatcher()
+func NewServer(port int, config *types.Config) *Server {
+	dispatcher := NewDispatcher(config)
 
 	return &Server{
 		EventServer: &gnet.EventServer{},
@@ -53,7 +53,7 @@ func (ls *Server) React(frame []byte, conn gnet.Conn) (out []byte, action gnet.A
 	} else {
 		log.Printf("Packet received: %X\n, PacketCount: %v\n", pkt.Header.ID, pkt.Header.PacketCount)
 		if handler, ok := ls.Dispatcher.Handlers[pkt.Header.ID]; ok {
-			return handler(pkt, conn)
+			return handler(pkt, conn, ls.Dispatcher.Config)
 		} else {
 			return handlers.HandleDefault(pkt, conn)
 		}

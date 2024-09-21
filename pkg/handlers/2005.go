@@ -8,7 +8,7 @@ import (
 	"sixserver/pkg/types"
 )
 
-func Handle0x2005(pkt types.Packet, conn gnet.Conn) (out []byte, action gnet.Action) {
+func Handle0x2005(pkt types.Packet, conn gnet.Conn, config *types.Config) (out []byte, action gnet.Action) {
 	remoteAddr := conn.RemoteAddr().String()
 	serverIP, _, err := net.SplitHostPort(remoteAddr)
 	HandleError(err)

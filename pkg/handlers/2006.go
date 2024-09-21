@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func Handle0x2006(pkt types.Packet, conn gnet.Conn) (out []byte, action gnet.Action) {
+func Handle0x2006(pkt types.Packet, conn gnet.Conn, config *types.Config) (out []byte, action gnet.Action) {
 	currentTime := uint32(time.Now().Unix())
 	byteSlice := make([]byte, 4)
 	binary.BigEndian.PutUint32(byteSlice, currentTime)

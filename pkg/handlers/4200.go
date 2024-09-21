@@ -9,7 +9,7 @@ import (
 	"sixserver/pkg/types"
 )
 
-func Handle0x4200(pkt types.Packet, conn gnet.Conn) (out []byte, action gnet.Action) {
+func Handle0x4200(pkt types.Packet, conn gnet.Conn, config *types.Config) (out []byte, action gnet.Action) {
 	gameVersion := unpackGameVersion(pkt.Data)
 	log.Printf("Game version: %d", gameVersion)
 	lobbies := getLobbies()

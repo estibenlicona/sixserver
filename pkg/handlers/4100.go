@@ -9,7 +9,7 @@ import (
 	"sixserver/pkg/types"
 )
 
-func Handle0x4100(pkt types.Packet, conn gnet.Conn) (out []byte, action gnet.Action) {
+func Handle0x4100(pkt types.Packet, conn gnet.Conn, config *types.Config) (out []byte, action gnet.Action) {
 
 	profileIndex := unpackProfileIndex(pkt.Data)
 	profiles := []types.Profile{
