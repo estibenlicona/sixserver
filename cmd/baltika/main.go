@@ -5,11 +5,13 @@ import (
 	"github.com/panjf2000/gnet"
 	"log"
 	"sixserver/pkg/config"
+	"sixserver/pkg/database"
 	"sixserver/pkg/tcp"
 )
 
 func main() {
 	cfg := config.Load()
+	database.InitRedis(*cfg)
 
 	loginServer := tcp.NewServer(cfg.LoginPort)
 	go func() {
