@@ -14,8 +14,12 @@ type UserState struct {
 }
 
 type User struct {
-	Profile Profile
-	State   UserState
+	Username string
+	Serial   string
+	Hash     string
+	Profile  Profile
+	State    UserState
+	Online   bool
 }
 
 func GetDivision(points uint32) uint8 {
@@ -28,4 +32,8 @@ func GetDivision(points uint32) uint8 {
 		}
 	}
 	return maxDivision
+}
+
+func (user *User) IsOnline() bool {
+	return user.Online
 }

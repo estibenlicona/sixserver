@@ -4,6 +4,7 @@ import (
 	"github.com/panjf2000/gnet"
 	"log"
 	"sixserver/pkg/handlers"
+	"sixserver/pkg/helpers"
 	"sixserver/pkg/protocols/packet"
 	"sixserver/pkg/types"
 )
@@ -39,14 +40,14 @@ func (ls *Server) OnOpened(c gnet.Conn) (out []byte, action gnet.Action) {
 	return
 }
 
-func (ls *Server) OnClosed(c gnet.Conn, err error) (action gnet.Action) {
-	log.Printf("NetworkServer Connection closed: %s\n", c.RemoteAddr().String())
+func (ls *Server) OnClosed(conn gnet.Conn, err error) (action gnet.Action) {
+	log.Printf("NetworkServer Connection closed: %s\n", conn.RemoteAddr().String())
 	return
 }
 
 func (ls *Server) React(frame []byte, conn gnet.Conn) (out []byte, action gnet.Action) {
 	pkt, err := packet.MakePacket(frame)
-	handlers.HandleError(err)
+	helpers.HandleError(err)
 
 	if pkt.Header.ID == 5 {
 		handlers.Handle0x0005(frame, conn)

@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/panjf2000/gnet"
 	"net"
+	"sixserver/pkg/helpers"
 	"sixserver/pkg/protocols/packet"
 	"sixserver/pkg/protocols/pes6"
 	"sixserver/pkg/types"
@@ -11,7 +12,7 @@ import (
 func Handle0x2005(pkt types.Packet, conn gnet.Conn, config *types.Config) (out []byte, action gnet.Action) {
 	remoteAddr := conn.RemoteAddr().String()
 	serverIP, _, err := net.SplitHostPort(remoteAddr)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	servers := []types.Server{
 		{TypeID: -1, ServiceID: 2, ServiceName: "LOGIN", ServerIP: serverIP, ServicePort: 20202, NumUsers: 0, SomeValue: 2},
@@ -20,13 +21,13 @@ func Handle0x2005(pkt types.Packet, conn gnet.Conn, config *types.Config) (out [
 	}
 
 	err = pes6.SendPacketWithZeros(conn, 0x2002, 4)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	data, _ := packet.MakeDataWithServers(servers)
 	err = pes6.SendPacketWithData(conn, 0x2003, data)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = pes6.SendPacketWithZeros(conn, 0x2004, 4)
-	HandleError(err)
+	helpers.HandleError(err)
 	return
 }

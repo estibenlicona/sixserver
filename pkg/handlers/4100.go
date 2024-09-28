@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"github.com/panjf2000/gnet"
 	"log"
+	"sixserver/pkg/helpers"
 	"sixserver/pkg/protocols/pes6"
 	"sixserver/pkg/types"
 )
@@ -22,7 +23,7 @@ func Handle0x4100(pkt types.Packet, conn gnet.Conn, config *types.Config) (out [
 	data = appendData(data)
 
 	err := pes6.SendPacketWithData(conn, 0x4101, data)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	return
 }

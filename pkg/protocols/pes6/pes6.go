@@ -7,12 +7,12 @@ import (
 	"sixserver/pkg/types"
 )
 
-func getConnectionContext(conn gnet.Conn) *types.ConnectionContext {
+func GetConnectionContext(conn gnet.Conn) *types.ConnectionContext {
 	return conn.Context().(*types.ConnectionContext)
 }
 
 func SendPacketWithData(conn gnet.Conn, id uint16, data []byte) error {
-	ctx := getConnectionContext(conn)
+	ctx := GetConnectionContext(conn)
 	packetReadyToSend := packet.CreatePacketToSend(id, ctx.PacketCount, data)
 
 	err := conn.AsyncWrite(packetReadyToSend)
@@ -26,7 +26,7 @@ func SendPacketWithData(conn gnet.Conn, id uint16, data []byte) error {
 }
 
 func SendPacketWithZeros(conn gnet.Conn, id uint16, size int) error {
-	ctx := getConnectionContext(conn)
+	ctx := GetConnectionContext(conn)
 	data := packet.MakeDataWithOnes(size)
 	packetReadyToSend := packet.CreatePacketToSend(id, ctx.PacketCount, data)
 

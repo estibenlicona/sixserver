@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"github.com/panjf2000/gnet"
+	"sixserver/pkg/helpers"
 	"sixserver/pkg/protocols/pes6"
 	"sixserver/pkg/types"
 )
@@ -13,15 +14,15 @@ func Handle0x4202(pkt types.Packet, conn gnet.Conn, config *types.Config) (out [
 
 	var lobbyId uint8
 	err := binary.Read(bytes.NewReader(pkt.Data[:4]), binary.BigEndian, &lobbyId)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	var udpPort1 uint16
 	err = binary.Read(bytes.NewReader(pkt.Data[17:19]), binary.BigEndian, &udpPort1)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	var udpPort2 uint16
 	err = binary.Read(bytes.NewReader(pkt.Data[35:37]), binary.BigEndian, &udpPort2)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	user := types.User{}
 	user.State = types.UserState{
@@ -37,14 +38,14 @@ func Handle0x4202(pkt types.Packet, conn gnet.Conn, config *types.Config) (out [
 	}
 
 	err = pes6.SendPacketWithZeros(conn, 0x4203, 4)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	var data []byte
 	data, err = formatPlayerInfo(user, 0)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = pes6.SendPacketWithData(conn, 0x4220, data)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	return
 }

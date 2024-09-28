@@ -23,3 +23,7 @@ func InitRedis(config types.Config) {
 	}
 	log.Printf("Conectado a Redis en %s", config.Redis.Addr)
 }
+
+func GetRedisConnection() *redis.Client {
+	return rdb
+}

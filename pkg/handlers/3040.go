@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"github.com/panjf2000/gnet"
+	"sixserver/pkg/helpers"
 	"sixserver/pkg/protocols/pes6"
 	"sixserver/pkg/types"
 )
@@ -26,14 +27,14 @@ func Handle0x3040(pkt types.Packet, conn gnet.Conn, config *types.Config) (out [
 	buffer.Write(make([]byte, 4))
 
 	err := binary.Write(&buffer, binary.BigEndian, types.AddPadding(profile.Name, 16))
-	HandleError(err)
+	helpers.HandleError(err)
 	padding := make([]byte, 0x18e-20)
 
 	buffer.Write(padding)
 	data := buffer.Bytes()
 
 	err = pes6.SendPacketWithData(conn, 0x3042, data)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	return
 }

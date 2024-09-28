@@ -25,6 +25,10 @@ func Load() *types.Config {
 			Password: getEnv("REDIS_PASSWORD", ""),
 			DB:       getEnvAsInt("REDIS_DB", 0),
 		},
+		Roster: types.RosterConfig{
+			EnforceHash: getEnvAsBool("ROSTER_ENFORCE_HASH", true),
+			CompareHash: getEnvAsBool("ROSTER_COMPARE_HASH", true),
+		},
 	}
 }
 
@@ -42,6 +46,18 @@ func getEnvAsInt(key string, defaultValue int) int {
 		return defaultValue
 	}
 	val, err := strconv.Atoi(valStr)
+	if err != nil {
+		return defaultValue
+	}
+	return val
+}
+
+func getEnvAsBool(key string, defaultValue bool) bool {
+	valStr := os.Getenv(key)
+	if valStr == "" {
+		return defaultValue
+	}
+	val, err := strconv.ParseBool(valStr)
 	if err != nil {
 		return defaultValue
 	}

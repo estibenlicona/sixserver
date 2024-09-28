@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"github.com/panjf2000/gnet"
+	"sixserver/pkg/helpers"
 	"sixserver/pkg/protocols/pes6"
 	"sixserver/pkg/types"
 )
@@ -21,7 +22,7 @@ func Handle0x4102(pkt types.Packet, conn gnet.Conn, config *types.Config) (out [
 
 	profileInfo := packProfileInfo2(profile, stats)
 	err := pes6.SendPacketWithData(conn, 0x4103, profileInfo)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	return
 }
@@ -37,58 +38,58 @@ func packProfileInfo2(profile types.Profile, stats types.Stats) []byte {
 	buffer.Write([]byte{0, 0, 0, 0})
 
 	err := binary.Write(&buffer, binary.BigEndian, profile.ID)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	var name = types.AddPadding(profile.Name, 16)
 	buffer.Write(name)
 
 	var division = types.GetDivision(profile.Points)
 	err = binary.Write(&buffer, binary.BigEndian, division)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = binary.Write(&buffer, binary.BigEndian, profile.Points)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	var matchesPlayed = stats.Wins + stats.Losses + stats.Draws
 	err = binary.Write(&buffer, binary.BigEndian, matchesPlayed)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = binary.Write(&buffer, binary.BigEndian, stats.Wins)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = binary.Write(&buffer, binary.BigEndian, stats.Losses)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = binary.Write(&buffer, binary.BigEndian, stats.Draws)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = binary.Write(&buffer, binary.BigEndian, stats.StreakCurrent)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = binary.Write(&buffer, binary.BigEndian, stats.StreakBest)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = binary.Write(&buffer, binary.BigEndian, profile.Disconnects)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	buffer.Write([]byte{0, 0})
 
 	err = binary.Write(&buffer, binary.BigEndian, stats.GoalsScored)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	buffer.Write([]byte{0, 0})
 
 	err = binary.Write(&buffer, binary.BigEndian, stats.GoalsAllowed)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = binary.Write(&buffer, binary.BigEndian, profile.FavTeam)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = binary.Write(&buffer, binary.BigEndian, profile.FavPlayer)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	err = binary.Write(&buffer, binary.BigEndian, profile.Rank)
-	HandleError(err)
+	helpers.HandleError(err)
 
 	return buffer.Bytes()
 }

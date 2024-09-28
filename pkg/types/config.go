@@ -8,6 +8,12 @@ type Config struct {
 	MainPort    int
 	CipherKey   string
 	Redis       RedisConfig
+	Roster      RosterConfig
+}
+
+type RosterConfig struct {
+	EnforceHash bool
+	CompareHash bool
 }
 
 type RedisConfig struct {
